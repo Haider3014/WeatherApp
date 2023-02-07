@@ -1,0 +1,29 @@
+body{
+    background-color: #181818;
+}
+
+.searchbar{
+    border-radius: 10px;
+    background-color: 	#181818;
+    width:850px;
+    color:#ffff;
+    
+}
+.image{
+    width:300px;
+    height: 350px;
+}
+.d-flex{
+    justify-content: center;
+    align-items: center;
+}
+.image-cards{
+    width:750px;
+    display: flex;
+    justify-content: space-around;
+}
+.backimage{
+    height:350px;
+    background-position: center;
+    background-size: cover;
+}
