@@ -12,6 +12,7 @@ const Weather = () => {
     const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apikey}`
     const data = await fetch(url)
     const res = await data.json()
+    console.log(res)
     setcoordinates(
       {
         lon: res[0].lon,
@@ -55,12 +56,7 @@ const Weather = () => {
     aqi()
   }, [coordinates])
 
-  const handlesearch = (e) => {
-    setcity(e.target.value)
-  }
-  const click = () => {
-    Fetchlocation()
-  }
+
   const Aqidisp = () => {
     if (aqivalue.value === 5)
       return <div className="card text-bg-dark mt-5 image">
@@ -76,7 +72,7 @@ const Weather = () => {
         <img src={require('./images/aqi1.jpg')} className="card-img backimage " alt="..." />
         <div className="card-img-overlay">
           <h3 className="card-title">AQI</h3>
-          <h4 className="card-text" style={{ color: '#990000'  }}>POOR</h4>
+          <h4 className="card-text" style={{ color: '#990000' }}>POOR</h4>
           <p className="card-text">Wind speed- {weather.wind} km/hr</p>
         </div>
       </div>
@@ -109,38 +105,66 @@ const Weather = () => {
       </div>
   }
 
+  const handlesearch = (e) => {
+    setcity(e.target.value)
+  }
+  const click = () => {
+    Fetchlocation()
+  }
 
 
 
   return (
 
     <>
-    <div className="container mt-5">
-    <div className="d-flex"  >
-      <input className="form-control me-2 searchbar" id="search" name='search' type="search" placeholder="Search" aria-label="Search" onChange={handlesearch} />
-      <button className="btn btn-outline-primary" onClick={click} >Search</button>
-    </div>
-    {Fetchweather?"loading":
-    <div className='image-cards container'>
-    <div className="card text-bg-dark mt-5 image">
-      <img src={require('./images/gorgeous-clouds-background-with-blue-sky-design_1017-25501.webp')} className="card-img backimage " alt="..." />
-      <div className="card-img-overlay">
-        <h2 className="card-title">{coordinates.name}</h2>
-        <h3 className="card-title">{weather.temp} °C</h3>
-        <p className="card-text">Feels like- {weather.feels_like}°C</p>
-        <p className="card-text">Max temperature- {weather.temp_max}°C</p>
-        <p className="card-text">Min temperature- {weather.temp_min}°C</p>
-        <p className="card-text">Humidity- {weather.humidity}%</p>
+      <div className="container">
+        <form className='d-flex m-5'>
+          <input type="text" placeholder='Type the City' className=' form-control me-2 searchbar' name="search" id="search" onChange={handlesearch} aria-label="Search" />
+          <button type="button" onClick={click} className="btn btn-outline-primary button" >Search</button>
+        </form>
+
+        {!Fetchweather ?
+           <div className='image-cards container'>
+           <div className="card text-bg-dark mt-5 image">
+             <img src={require('./images/gorgeous-clouds-background-with-blue-sky-design_1017-25501.webp')} className="card-img backimage " alt="..." />
+             <div className="card-img-overlay">
+               <h2 className="card-title">City</h2>
+               <h3 className="card-title">Temp </h3>
+               <p className="card-text">Feels like- </p>
+               <p className="card-text">Max temperature- </p>
+               <p className="card-text">Min temperature- </p>
+               <p className="card-text">Humidity- </p>
+             </div>
+           </div>
+           <div className="card text-bg-dark mt-5 image">
+             <img src={require('./images/aqi1.jpg')} className="card-img backimage" alt="..." />
+             <div className="card-img-overlay">
+               <h3 className="card-title">AQI</h3>
+               <h4 className="card-text" >..</h4>
+               <p className="card-text">Wind speed-</p>
+             </div>
+           </div>
+
+         </div>
+
+          :
+          <div className='image-cards container'>
+          <div className="card text-bg-dark mt-5 image">
+            <img src={require('./images/gorgeous-clouds-background-with-blue-sky-design_1017-25501.webp')} className="card-img backimage " alt="..." />
+            <div className="card-img-overlay">
+              <h2 className="card-title">{coordinates.name}</h2>
+              <h3 className="card-title">{weather.temp} °C</h3>
+              <p className="card-text">Feels like- {weather.feels_like}°C</p>
+              <p className="card-text">Max temperature- {weather.temp_max}°C</p>
+              <p className="card-text">Min temperature- {weather.temp_min}°C</p>
+              <p className="card-text">Humidity- {weather.humidity}%</p>
+            </div>
+          </div>
+          <Aqidisp></Aqidisp>
+
+        </div>}
+         
       </div>
-    </div>
-    <Aqidisp></Aqidisp>
-    
-  </div>}
-    
-  </div>
-          
-      
-        
     </>
   )
 }
